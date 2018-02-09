@@ -1,6 +1,7 @@
 # flake8: noqa
 
 from .base import Attack
+from .momentum_attack import MIM, MomentumIterativeAttack
 from .gradientsign import FGSM, GradientSignAttack, IterativeGradientSignAttack
 from .gradient import GradientAttack, IterativeGradientAttack
 from .lbfgs import LBFGSAttack, ApproximateLBFGSAttack
