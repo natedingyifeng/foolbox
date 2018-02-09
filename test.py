@@ -14,7 +14,7 @@ from scipy.misc import imsave, imshow, imread
 import matplotlib.pyplot as plt
 import glob
 
-image_dir = './imagenet224'
+image_dir = './imgs'
 
 keras.backend.set_learning_phase(0)
 kmodel = ResNet50(weights='imagenet')
