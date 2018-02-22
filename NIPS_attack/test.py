@@ -14,7 +14,11 @@ from scipy.misc import imsave, imshow, imread
 import matplotlib.pyplot as plt
 import glob
 
+<<<<<<< HEAD:NIPS_attack/test.py
 image_dir = '/data0/images/imagenet12/imagenet224'
+=======
+image_dir = './imgs'
+>>>>>>> e604fd2040b9fa9642b4f51892ca69633d9ac984:test.py
 
 keras.backend.set_learning_phase(0)
 kmodel = ResNet50(weights='imagenet')
@@ -23,15 +27,19 @@ fmodel = KerasModel(kmodel, bounds=(0, 255), preprocessing=preprocessing)
 
 success = 0.
 paths = glob.glob(image_dir+'/*.png')
+<<<<<<< HEAD:NIPS_attack/test.py
 print "{} images found".format(len(paths))
 for path in paths[:100]:
+=======
+for path in paths:
+>>>>>>> e604fd2040b9fa9642b4f51892ca69633d9ac984:test.py
     image = imread(path).astype(np.float32)
 
     test = image.copy()
     preds = kmodel.predict(preprocess_input(np.expand_dims(test, 0)))
     label = np.argmax(preds)
     #print("Top 3 predictions (regular: ", decode_predictions(preds, top=3))
-    
+
     # run the attack
     print "running the attack"
     attack = MIM(model=fmodel, criterion=Misclassification())
@@ -48,20 +56,25 @@ for path in paths[:100]:
     if adv_label != label:
         success += 1
     #print("Top 5 predictions (adversarial: ", decode_predictions(preds, top=5))
-    
+
     diff = (adversarial_rgb[0] - image)
 
     # normalize to 0-1 for viewing with matplotlib
     a = adversarial_rgb[0].copy()
     nx = (a-np.min(a))/(np.max(a)-np.min(a))
     nd = (diff-np.min(diff))/(np.max(diff)-np.min(diff))
-    
+
     max_norm = np.max(np.abs(diff))
     print "max norm: ", max_norm
     print "l2 norm: ", np.linalg.norm(diff)
     print "---------------------------------"
+<<<<<<< HEAD:NIPS_attack/test.py
     
     #plt.ion()
+=======
+
+    plt.figure()
+>>>>>>> e604fd2040b9fa9642b4f51892ca69633d9ac984:test.py
     plt.subplot(1, 3, 1)
     plt.title("Real")
     plt.imshow(image.astype(np.uint8))
@@ -74,4 +87,4 @@ for path in paths[:100]:
     plt.savefig('adv_test', format='png')
     plt.show()
 
-print "Success percentage: {}%".format(success)
+print "Success percentage: {}%".format(float(success)/len(paths))
