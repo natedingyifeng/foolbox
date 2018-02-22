@@ -2,6 +2,7 @@
 
 from .base import Attack
 from .momentum_attack import MIM, MomentumIterativeAttack
+from .pgd import PGD, ProjectedGradientAttack
 from .gradientsign import FGSM, GradientSignAttack, IterativeGradientSignAttack
 from .gradient import GradientAttack, IterativeGradientAttack
 from .lbfgs import LBFGSAttack, ApproximateLBFGSAttack
