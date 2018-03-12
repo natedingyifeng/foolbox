@@ -60,6 +60,9 @@ class Adversarial(object):
         # check if the original image is already adversarial
         self.predictions(original_image)
 
+        # EDIT save the current attempt
+        self._current_perturbation = None
+
     def _reset(self):
         self.__best_adversarial = None
         self.__best_distance = self.__distance(value=np.inf)
@@ -232,6 +235,9 @@ class Adversarial(object):
             Controls if the bounds for the pixel values should be checked.
 
         """
+        # EDIT save the current perturbation
+        self._current_perturbation = image
+
         assert not strict or self.in_bounds(image)
 
         self._total_prediction_calls += 1

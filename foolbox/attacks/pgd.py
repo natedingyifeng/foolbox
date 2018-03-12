@@ -23,16 +23,30 @@ class ProjectedGradientAttack(Attack):
 
         image = a.original_image
         min_, max_ = a.bounds()
-        # random 
+        # random
         perturbed = image
-        perturbed = perturbed + np.random.uniform(-epsilon, epsilon, image.shape)
-        perturbed = np.clip(perturbed, min_, max_)
-        for _ in range(steps):
+        # perturbed = perturbed + np.random.uniform(-epsilon, epsilon, image.shape)
+        for i in range(steps):
             gradient = a.gradient(perturbed)
-            perturbed += lr * np.sign(gradient)
-            perturbed = np.clip(perturbed, image-epsilon, image+epsilon)
-            perturbed = np.clip(perturbed, min_, max_)
+            perturbed_sign = lr * np.sign(gradient)
+            perturbed += perturbed_sign
+            perturbed_epsilon = np.clip(perturbed, image-epsilon, image+epsilon)
+            perturbed = np.clip(perturbed_epsilon, min_, max_)
+            # try:
             a.predictions(perturbed)
+            """
+            except AssertionError:
+                print "bounds"
+                print i
+                print perturbed.shape
+                print np.min(perturbed), np.max(perturbed)
+                print "adv: ", perturbed
+                print "adv sign: ", perturbed_sign
+                print "adv clip eps: ", perturbed_epsilon
+                print "grad: ", gradient
+                from scipy.misc import imshow
+                imshow(perturbed)
+            """
 
 
 PGD = ProjectedGradientAttack
