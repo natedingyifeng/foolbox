@@ -41,10 +41,7 @@ class MomentumIterativeAttack(Attack):
             if is_adversarial:
                 print "mim success norm: ", np.max(np.abs(perturbed - image))
                 return
-        # from scipy.misc import imshow
-        print "mim failed: ", np.argmax(a.predictions(perturbed)[0])
-        print "mim failed norm: ", np.max(np.abs(perturbed - image))
-        # imshow(perturbed)
+            
         return
 
 
