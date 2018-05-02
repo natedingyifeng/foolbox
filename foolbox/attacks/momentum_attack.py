@@ -39,9 +39,7 @@ class MomentumIterativeAttack(Attack):
 
             logits, is_adversarial = a.predictions(perturbed)
             if is_adversarial:
-                print "mim success norm: ", np.max(np.abs(perturbed - image))
-                return
-            
+                return 
         return
 
 
